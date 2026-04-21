@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NJ Solar Door Hanger — Bilingual (Pattern Interrupt)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Permanent+Marker&family=Caveat:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5E1A;
+    --navy-ink: #1a2744;
+    --kraft: #F5F0E8;
+    --warm-white: #FFFDF8;
+    --soft-black: #2D2D2D;
+    /* Door hanger: 4.25" x 11" at 200dpi preview = 850 x 2200 */
+    --card-w: 850px;
+    --card-h: 2200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    color: #ccc;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .instructions {
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 12px;
+    padding: 20px 28px;
+    margin-bottom: 36px;
+    max-width: 860px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #aaa;
+  }
+  .instructions strong { display: block; font-size: 17px; margin-bottom: 8px; color: #fff; }
+  .instructions em { color: var(--orange); font-style: normal; font-weight: 600; }
+  .instructions .checklist { text-align: left; margin-top: 10px; padding-left: 20px; }
+  .instructions .checklist li { margin-bottom: 4px; }
+
+  .side-label {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .hangers {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .hanger-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hanger {
+    width: var(--card-w);
+    height: var(--card-h);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #fff;
+  }
+
+  @media screen {
+    .hanger { border-radius: 8px; box-shadow: 0 12px 48px rgba(0,0,0,0.5); }
+  }
+
+  /* Die-cut hole area at top */
+  .hanger__hole-area {
+    height: 140px;
+    width: 100%;
+    background: var(--kraft);
+    position: relative;
+    z-index: 2;
+  }
+  .hanger--front .hanger__hole-area {
+    background: #2a3a2a;
+  }
+  .hanger__hole {
+    position: absolute;
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 44px;
+    background: #1a1a1a;
+    border-radius: 44px / 22px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+  }
+  .hanger__slit {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 4px;
+    background: #1a1a1a;
+    border-radius: 2px;
+  }
+
+  /* =========================================
+     FRONT SIDE (English) — Pattern Interrupt
+     ========================================= */
+  .hanger--front .photo-bg {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #3a4a3a 0%, #2a3a2a 40%, #1a2a1a 100%);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hanger--front .overlay {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.3) 0%,
+      rgba(0,0,0,0.15) 25%,
+      rgba(0,0,0,0.55) 60%,
+      rgba(0,0,0,0.88) 100%
+    );
+  }
+
+  .hanger--front .photo-placeholder {
+    position: absolute;
+    top: 180px;
+    left: 0;
+    right: 0;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.25);
+    font-size: 14px;
+    z-index: 1;
+    text-align: center;
+  }
+  .hanger--front .photo-placeholder svg { opacity: 0.2; }
+
+  /* Content — headline pushed to bottom third */
+  .hanger--front .content {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    padding: 36px 44px 32px;
+  }
+
+  .hanger--front .top-tag {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  .hanger--front .headline-block {
+    margin-top: auto;
+    margin-bottom: 28px;
+  }
+
+  .hanger--front .handwriting {
+    font-family: 'Permanent Marker', cursive;
+    color: #FFFFFF;
+    text-shadow: 2px 3px 8px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.4);
+    line-height: 1.15;
+  }
+  .hanger--front .handwriting .line {
+    display: block;
+  }
+  .hanger--front .handwriting .line--1 {
+    font-size: 68px;
+    transform: rotate(-1.5deg);
+    margin-bottom: 2px;
+  }
+  .hanger--front .handwriting .line--2 {
+    font-size: 62px;
+    transform: rotate(0.8deg);
+    margin-left: 18px;
+    margin-bottom: 2px;
+    color: var(--orange);
+  }
+  .hanger--front .handwriting .line--3 {
+    font-size: 54px;
+    transform: rotate(-0.3deg);
+    margin-left: 6px;
+    color: rgba(255,255,255,0.95);
+  }
+
+  .hanger--front .sub-line {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.45;
+    margin-top: 24px;
+    margin-left: 6px;
+    max-width: 92%;
+  }
+
+  .hanger--front .signature {
+    font-family: 'Permanent Marker', cursive;
+    color: var(--orange);
+    font-size: 34px;
+    margin-top: 12px;
+    margin-left: 28px;
+    transform: rotate(2deg);
+    text-shadow: 2px 3px 8px rgba(0,0,0,0.5);
+  }
+
+  /* Orange CTA strip at bottom */
+  .hanger--front .cta-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--orange);
+    padding: 22px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 4;
+  }
+  .hanger--front .cta-strip__text {
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .hanger--front .cta-strip__sub {
+    color: rgba(255,255,255,0.92);
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .hanger--front .cta-strip__qr {
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ccc;
+    flex-shrink: 0;
+  }
+
+  .hanger--front .disclosure-front {
+    position: absolute;
+    bottom: 86px;
+    left: 36px;
+    right: 36px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.4;
+    text-align: center;
+    z-index: 4;
+  }
+
+  /* =========================================
+     BACK SIDE (Spanish) — Kraft personal note
+     ========================================= */
+  .hanger--back {
+    background: var(--kraft);
+  }
+
+  .hanger--back .back-content {
+    position: absolute;
+    top: 140px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 40px 40px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hanger--back .brand-line {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy-ink);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .hanger--back .brand-divider {
+    width: 50px;
+    height: 3px;
+    background: var(--orange);
+    margin: 0 auto 24px;
+  }
+
+  .hanger--back .greeting {
+    font-family: 'Caveat', cursive;
+    font-size: 46px;
+    font-weight: 600;
+    color: var(--navy-ink);
+    margin-bottom: 18px;
+    line-height: 1;
+  }
+
+  .hanger--back .body-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--soft-black);
+    margin-bottom: 16px;
+  }
+
+  .hanger--back .signature-es {
+    font-family: 'Caveat', cursive;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy-ink);
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+
+  /* CTA Box */
+  .hanger--back .cta-box {
+    background: rgba(255,255,255,0.7);
+    border: 3px solid var(--orange);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-top: auto;
+    margin-bottom: 14px;
+  }
+  .hanger--back .cta-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .hanger--back .cta-action {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1.2;
+  }
+  .hanger--back .cta-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy-ink);
+    margin-top: 4px;
+  }
+  .hanger--back .cta-extras {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .hanger--back .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 10px;
+  }
+  .hanger--back .cta-qr {
+    width: 68px;
+    height: 68px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #bbb;
+    flex-shrink: 0;
+  }
+  .hanger--back .cta-qr-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.3;
+  }
+
+  .hanger--back .disclosure {
+    font-family: 'Poppins', sans-serif;
+    font-size: 8.5px;
+    color: #a09688;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* =========================================
+     PRINT
+     ========================================= */
+  @media print {
+    .instructions, .side-label { display: none !important; }
+    body { background: none; padding: 0; }
+    .hangers { flex-direction: column; gap: 0; }
+    .hanger { page-break-after: always; box-shadow: none; border-radius: 0; }
+    @page { size: 4.25in 11in; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="instructions">
+  <strong>Bilingual Door Hanger — 4.25" × 11"</strong>
+  Pattern-interrupt concept: "I'm not here to sell you solar. I'm here to answer questions."<br>
+  Copy reviewed by conversion-copywriter agent. Lead with trust, not pitch.<br>
+  <em>FRONT:</em> Full-bleed photo + English handwritten hook over dark overlay<br>
+  <em>BACK:</em> Warm kraft + Spanish personal note + CTA box<br>
+  Print on 14pt matte cardstock, die-cut hole at top.<br><br>
+  <strong>Before printing:</strong>
+  <ul class="checklist">
+    <li>Replace photo placeholder with Johan's actual photo (standing in front of home with panels)</li>
+    <li>Generate QR code pointing to website/welcome-back page, replace "QR" placeholders</li>
+    <li>Confirm Johan's compensation language matches his 1099 (currently "by the installer")</li>
+  </ul>
+</div>
+
+<div class="hangers">
+
+  <!-- ===============================
+       FRONT (English) — seen first
+       =============================== -->
+  <div class="hanger-wrap">
+    <p class="side-label">Front — English</p>
+    <div class="hanger hanger--front">
+      <div class="hanger__hole-area">
+        <div class="hanger__slit"></div>
+        <div class="hanger__hole"></div>
+      </div>
+      <div class="photo-bg"></div>
+      <div class="overlay"></div>
+      <div class="photo-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" width="90" height="90"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        JOHAN'S PHOTO<br>
+        <span style="font-size:11px; opacity:0.5;">In front of a house with panels</span>
+      </div>
+
+      <div class="content">
+        <div class="top-tag">← En español al reverso</div>
+
+        <div class="headline-block">
+          <div class="handwriting">
+            <span class="line line--1">I'm not here</span>
+            <span class="line line--2">to sell you solar.</span>
+            <span class="line line--3">I'm here to answer<br>questions.</span>
+          </div>
+          <p class="sub-line">I'm Johan — I live around here, I'm from Colombia, and I'll tell you straight whether your roof is even worth it.</p>
+          <div class="signature">— Johan</div>
+        </div>
+      </div>
+
+      <p class="disclosure-front">I'm paid by the chosen installer only if you decide to move forward. Your consultation costs nothing. Your bill stays with me.</p>
+
+      <div class="cta-strip">
+        <div>
+          <div class="cta-strip__text">Text me a photo of<br>your electric bill</div>
+          <div class="cta-strip__sub">(201) 275-3380 · Hablo español · Your info stays with me</div>
+        </div>
+        <div class="cta-strip__qr">QR</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===============================
+       BACK (Spanish) — kraft, personal
+       =============================== -->
+  <div class="hanger-wrap">
+    <p class="side-label">Back — Español</p>
+    <div class="hanger hanger--back">
+      <div class="hanger__hole-area">
+        <div class="hanger__slit"></div>
+        <div class="hanger__hole"></div>
+      </div>
+
+      <div class="back-content">
+        <p class="brand-line">Johan · Consultor Solar</p>
+        <div class="brand-divider"></div>
+
+        <p class="greeting">Hola vecino —</p>
+
+        <p class="body-text">Soy Johan. Soy colombiano, vivo aquí en Jersey, y ayudo a familias como la tuya a entender si los paneles solares tienen sentido para tu casa — o si no.</p>
+
+        <p class="body-text">No trabajo para una sola compañía. Reviso tu factura de luz, miro tu techo, y te digo la verdad.</p>
+
+        <p class="body-text">Si no te conviene, te lo digo. Así de simple.</p>
+
+        <p class="signature-es">— Johan, tu vecino</p>
+
+        <div class="cta-box">
+          <p class="cta-label">Tu próximo paso</p>
+          <p class="cta-action">Mándame tu factura</p>
+          <p class="cta-number">(201) 275-3380</p>
+          <p class="cta-extras">Texto o llamada · Respondo el mismo día</p>
+          <div class="cta-row">
+            <div class="cta-qr">QR</div>
+            <p class="cta-qr-label">O escanea para<br>ver tu ahorro<br>estimado</p>
+          </div>
+        </div>
+
+        <p class="disclosure">Recibo compensación del instalador solo si decides seguir adelante. La consulta es gratis, sin compromiso.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

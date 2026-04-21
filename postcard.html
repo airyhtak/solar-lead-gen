@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NJ Solar Postcard — A/B Variants (Final Design)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Permanent+Marker&family=Caveat:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5E1A;
+    --gold: #F9A825;
+    --navy: #1A237E;
+    --navy-ink: #1a2744;
+    --kraft: #F5F0E8;
+    --warm-white: #FFFDF8;
+    --soft-black: #2D2D2D;
+    --card-w: 1800px;
+    --card-h: 1200px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    color: #ccc;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .instructions {
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 12px;
+    padding: 24px 32px;
+    margin-bottom: 40px;
+    max-width: 780px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #aaa;
+  }
+  .instructions strong { display: block; font-size: 18px; margin-bottom: 8px; color: #fff; }
+  .instructions em { color: var(--orange); font-style: normal; font-weight: 600; }
+  .instructions .checklist { text-align: left; margin-top: 12px; padding-left: 20px; }
+  .instructions .checklist li { margin-bottom: 4px; }
+
+  .variant-label {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 56px 0 8px;
+    text-align: center;
+  }
+  .variant-desc {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .side-label {
+    font-size: 12px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 20px 0 8px;
+    text-align: center;
+  }
+
+  .card {
+    width: var(--card-w);
+    height: var(--card-h);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  @media screen {
+    .card { border-radius: 8px; box-shadow: 0 12px 48px rgba(0,0,0,0.5); }
+  }
+
+  /* =========================================
+     FRONT SIDE — Full Bleed Photo + Handwriting
+     ========================================= */
+  .front {
+    background: #2c2c2c;
+  }
+
+  /* Photo background — replace with Johan's actual photo */
+  .front__photo-bg {
+    position: absolute;
+    inset: 0;
+    /* REPLACE: background-image: url('johan-photo.jpg'); */
+    background: linear-gradient(135deg, #3a4a3a 0%, #2a3a2a 40%, #1a2a1a 100%);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Dark gradient overlay — makes text readable */
+  .front__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.1) 0%,
+      rgba(0,0,0,0.15) 40%,
+      rgba(0,0,0,0.55) 70%,
+      rgba(0,0,0,0.75) 100%
+    );
+  }
+
+  /* Photo placeholder for preview */
+  .front__photo-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.3);
+    font-size: 18px;
+    z-index: 1;
+  }
+  .front__photo-placeholder svg { opacity: 0.2; }
+  .front__photo-placeholder span { font-size: 14px; opacity: 0.5; }
+
+  .front__content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 72px 64px;
+  }
+
+  /* The handwritten text — Permanent Marker font */
+  .front__handwriting {
+    font-family: 'Permanent Marker', cursive;
+    color: #FFFFFF;
+    text-shadow: 2px 3px 8px rgba(0,0,0,0.5), 0 0 40px rgba(0,0,0,0.3);
+    line-height: 1.4;
+    max-width: 1400px;
+  }
+  .front__line {
+    display: block;
+    margin-bottom: 8px;
+  }
+  .front__line--1 { font-size: 62px; transform: rotate(-1.5deg); }
+  .front__line--2 { font-size: 58px; transform: rotate(0.8deg); margin-left: 20px; }
+  .front__line--3 { font-size: 52px; transform: rotate(-0.5deg); margin-left: 8px; color: rgba(255,255,255,0.9); }
+
+  .front__signature {
+    font-family: 'Permanent Marker', cursive;
+    color: var(--orange);
+    font-size: 48px;
+    margin-top: 16px;
+    transform: rotate(2deg);
+    margin-left: 40px;
+    text-shadow: 2px 3px 8px rgba(0,0,0,0.4);
+  }
+
+  /* Arrow doodle pointing to Johan in photo */
+  .front__arrow {
+    position: absolute;
+    top: 120px;
+    right: 200px;
+    z-index: 3;
+    transform: rotate(-15deg);
+    opacity: 0.85;
+  }
+
+  /* =========================================
+     BACK SIDE — Warm Kraft Personal Note
+     ========================================= */
+  .back {
+    background: var(--kraft);
+    display: flex;
+  }
+
+  .back__message {
+    width: 52%;
+    padding: 56px 40px 40px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid #d4cfc5;
+  }
+
+  .back__greeting {
+    font-family: 'Caveat', cursive;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--navy-ink);
+    margin-bottom: 20px;
+  }
+
+  .back__body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--soft-black);
+    margin-bottom: 20px;
+  }
+
+  .back__signature {
+    font-family: 'Caveat', cursive;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy-ink);
+    margin-bottom: 32px;
+  }
+
+  /* CTA Box */
+  .back__cta-box {
+    background: rgba(255,255,255,0.7);
+    border: 3px solid var(--orange);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .back__cta-main {
+    flex: 1;
+  }
+  .back__cta-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .back__cta-action {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--orange);
+    letter-spacing: 0.5px;
+  }
+  .back__cta-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy-ink);
+    margin-top: 4px;
+  }
+  .back__cta-or {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #999;
+    margin-top: 8px;
+  }
+
+  .back__qr {
+    width: 110px;
+    height: 110px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transform: rotate(2deg);
+  }
+  .back__qr-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ccc;
+  }
+
+  .back__disclosure {
+    margin-top: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    color: #b0a89c;
+    line-height: 1.5;
+  }
+
+  /* Johan's photo circle on back */
+  .back__photo {
+    position: absolute;
+    top: 48px;
+    left: 56px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #d4cfc5;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b0a89c;
+    font-size: 11px;
+    font-weight: 600;
+    overflow: hidden;
+  }
+
+  /* Address area */
+  .back__address-area {
+    width: 48%;
+    padding: 52px 52px 36px 40px;
+    position: relative;
+  }
+
+  .back__return {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--soft-black);
+    font-weight: 500;
+  }
+  .back__return-tbd {
+    color: #b0a89c;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .back__stamp {
+    position: absolute;
+    top: 44px;
+    right: 52px;
+    width: 110px;
+    height: 80px;
+    border: 2px solid #c4bfb5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #c4bfb5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .back__addr-lines {
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    right: 52px;
+    transform: translateY(-10%);
+  }
+  .back__addr-line {
+    border-bottom: 2px solid #d4cfc5;
+    height: 48px;
+    margin-bottom: 14px;
+  }
+
+  /* =========================================
+     PRINT
+     ========================================= */
+  @media print {
+    .instructions, .variant-label, .variant-desc, .side-label { display: none !important; }
+    body { background: none; padding: 0; }
+    .card { page-break-after: always; box-shadow: none; border-radius: 0; }
+    @page { size: 9in 6in; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="instructions">
+  <strong>Solar Postcard — Final Design (2 A/B Variants)</strong>
+  6x9 oversized postcard. Matte 14-16pt cardstock. Full bleed.<br>
+  <em>Before printing, you MUST:</em>
+  <ul class="checklist">
+    <li>Replace the photo placeholder with Johan's actual photo (full-bleed background)</li>
+    <li>Replace QR placeholders with real QR codes (different code per variant for tracking)</li>
+    <li>Fill in PO Box on the back</li>
+    <li>Handwrite each recipient's first name in blue pen on the back ("Hey [Name],")</li>
+    <li>Use real stamps, not metered postage (anti-junk-mail signal)</li>
+    <li>Print on <em>matte</em> stock — NOT glossy</li>
+  </ul>
+</div>
+
+<!-- ============================================================
+     VARIANT A — "Your Electric Bill Went Up" (Loss Aversion)
+     Send to ~122 leads. QR → welcome-back.html?v=a
+     ============================================================ -->
+
+<p class="variant-label">Variant A — Loss Aversion</p>
+<p class="variant-desc">"Your bill went up since we talked." Every month without solar = another full-price bill. Send to half the list.</p>
+
+<p class="side-label">Front</p>
+<div class="card front">
+  <!-- REPLACE: Set Johan's photo as background-image on this div -->
+  <div class="front__photo-bg"></div>
+  <div class="front__overlay"></div>
+
+  <div class="front__photo-placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" width="120" height="120"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    JOHAN'S FULL PHOTO HERE
+    <span>Full bleed — him in front of a house with panels</span>
+  </div>
+
+  <div class="front__content">
+    <div class="front__handwriting">
+      <span class="front__line front__line--1">Hey — your electric bill</span>
+      <span class="front__line front__line--2">went up since we talked.</span>
+      <span class="front__line front__line--3">Let's fix that.</span>
+    </div>
+    <div class="front__signature">— Johan</div>
+  </div>
+
+  <!-- Hand-drawn arrow -->
+  <svg class="front__arrow" width="120" height="100" viewBox="0 0 120 100" fill="none">
+    <path d="M10 80 C30 75, 50 40, 90 25" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" fill="none" stroke-dasharray="0"/>
+    <path d="M80 15 L92 24 L78 32" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="0" y="96" font-family="Permanent Marker" font-size="16" fill="#FF5E1A" transform="rotate(-3, 0, 96)">that's me</text>
+  </svg>
+</div>
+
+<p class="side-label">Back (mailing side)</p>
+<div class="card back">
+  <div class="back__message" style="position: relative;">
+    <div class="back__photo">Photo</div>
+    <div style="margin-left: 96px;">
+      <p class="back__greeting">Hey there,</p>
+    </div>
+    <div>
+      <p class="back__body">We connected a while back about solar for your home. Since then, NJ rates have climbed again — and every month without solar is another full-price electric bill.</p>
+      <p class="back__body">I'll pull your actual electricity usage and show you what you'd save. No commitment, no pitch. Just the numbers.</p>
+      <p class="back__signature">— Johan</p>
+    </div>
+    <div>
+      <div class="back__cta-box">
+        <div class="back__cta-main">
+          <p class="back__cta-label">Your next step</p>
+          <p class="back__cta-action">Text "SOLAR"</p>
+          <p class="back__cta-number">(201) 275-3380</p>
+          <p class="back__cta-or">or scan the code to pick a time &rarr;</p>
+        </div>
+        <div class="back__qr">
+          <span class="back__qr-text">QR</span>
+        </div>
+      </div>
+      <p class="back__disclosure">NJ Solar Consultant connects homeowners with solar options and is compensated by partner installers. Free consultation, no obligation.</p>
+    </div>
+  </div>
+  <div class="back__address-area">
+    <div class="back__return">
+      NJ Solar Consultant<br>
+      <span class="back__return-tbd">[PO Box TBD]</span>
+    </div>
+    <div class="back__stamp">Place<br>Stamp<br>Here</div>
+    <div class="back__addr-lines">
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VARIANT B — "Your Neighbors Said Yes" (Social Proof)
+     Send to ~121 leads. QR → welcome-back.html?v=b
+     ============================================================ -->
+
+<p class="variant-label">Variant B — Social Proof</p>
+<p class="variant-desc">"Your neighbors said yes." NJ is #6 solar state, 180K+ homes. FOMO angle. Send to the other half.</p>
+
+<p class="side-label">Front</p>
+<div class="card front">
+  <div class="front__photo-bg"></div>
+  <div class="front__overlay"></div>
+
+  <div class="front__photo-placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" width="120" height="120"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    JOHAN'S FULL PHOTO HERE
+    <span>Full bleed — him in front of a house with panels</span>
+  </div>
+
+  <div class="front__content">
+    <div class="front__handwriting">
+      <span class="front__line front__line--1">Your neighbors</span>
+      <span class="front__line front__line--2">said yes.</span>
+      <span class="front__line front__line--3" style="font-size: 44px; margin-top: 8px;">Just saying.</span>
+    </div>
+    <div class="front__signature">— Johan</div>
+  </div>
+
+  <svg class="front__arrow" width="120" height="100" viewBox="0 0 120 100" fill="none">
+    <path d="M10 80 C30 75, 50 40, 90 25" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M80 15 L92 24 L78 32" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="0" y="96" font-family="Permanent Marker" font-size="16" fill="#FF5E1A" transform="rotate(-3, 0, 96)">that's me</text>
+  </svg>
+</div>
+
+<p class="side-label">Back (mailing side)</p>
+<div class="card back">
+  <div class="back__message" style="position: relative;">
+    <div class="back__photo">Photo</div>
+    <div style="margin-left: 96px;">
+      <p class="back__greeting">Hey there,</p>
+    </div>
+    <div>
+      <p class="back__body">We spoke a while back about solar, and a lot has changed on your street since then. More NJ homeowners went solar last year than any year before.</p>
+      <p class="back__body">I'll show you what your neighbors are saving. Takes 15 minutes. No commitment, just the numbers.</p>
+      <p class="back__signature">— Johan</p>
+    </div>
+    <div>
+      <div class="back__cta-box">
+        <div class="back__cta-main">
+          <p class="back__cta-label">Your next step</p>
+          <p class="back__cta-action">Text "SOLAR"</p>
+          <p class="back__cta-number">(201) 275-3380</p>
+          <p class="back__cta-or">or scan the code to pick a time &rarr;</p>
+        </div>
+        <div class="back__qr">
+          <span class="back__qr-text">QR</span>
+        </div>
+      </div>
+      <p class="back__disclosure">NJ Solar Consultant connects homeowners with solar options and is compensated by partner installers. Free consultation, no obligation. Data: SEIA 2024.</p>
+    </div>
+  </div>
+  <div class="back__address-area">
+    <div class="back__return">
+      NJ Solar Consultant<br>
+      <span class="back__return-tbd">[PO Box TBD]</span>
+    </div>
+    <div class="back__stamp">Place<br>Stamp<br>Here</div>
+    <div class="back__addr-lines">
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VARIANT A-ES — "Su factura de luz subió" (Spanish Loss Aversion)
+     Send to Spanish-first leads. QR → welcome-back-es.html?v=a
+     ============================================================ -->
+
+<p class="variant-label">Variant A (Español) — Facturas Subiendo</p>
+<p class="variant-desc">Versión en español de la variante de aversión a pérdida. Para leads hispanohablantes.</p>
+
+<p class="side-label">Frente</p>
+<div class="card front">
+  <div class="front__photo-bg"></div>
+  <div class="front__overlay"></div>
+
+  <div class="front__photo-placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" width="120" height="120"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    FOTO DE JOHAN AQUÍ
+    <span>Full bleed — frente a una casa con paneles solares</span>
+  </div>
+
+  <div class="front__content">
+    <div class="front__handwriting">
+      <span class="front__line front__line--1">Hola — su factura de luz</span>
+      <span class="front__line front__line--2">subió desde que hablamos.</span>
+      <span class="front__line front__line--3">Vamos a solucionarlo.</span>
+    </div>
+    <div class="front__signature">— Johan</div>
+  </div>
+
+  <svg class="front__arrow" width="120" height="100" viewBox="0 0 120 100" fill="none">
+    <path d="M10 80 C30 75, 50 40, 90 25" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M80 15 L92 24 L78 32" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="0" y="96" font-family="Permanent Marker" font-size="16" fill="#FF5E1A" transform="rotate(-3, 0, 96)">ese soy yo</text>
+  </svg>
+</div>
+
+<p class="side-label">Reverso (lado del envío)</p>
+<div class="card back">
+  <div class="back__message" style="position: relative;">
+    <div class="back__photo">Foto</div>
+    <div style="margin-left: 96px;">
+      <p class="back__greeting">Hola vecino,</p>
+    </div>
+    <div>
+      <p class="back__body">Hace un tiempo conversamos sobre instalar paneles solares en su casa. Desde entonces, las tarifas eléctricas en Nueva Jersey han vuelto a subir — y cada mes sin energía solar es otra factura de luz al precio completo.</p>
+      <p class="back__body">Voy a revisar su consumo eléctrico real y le muestro cuánto podría ahorrar. Sin compromiso, sin discurso de venta. Solo los números.</p>
+      <p class="back__signature">— Johan</p>
+    </div>
+    <div>
+      <div class="back__cta-box">
+        <div class="back__cta-main">
+          <p class="back__cta-label">Su próximo paso</p>
+          <p class="back__cta-action">Envíe "SOLAR"</p>
+          <p class="back__cta-number">(201) 275-3380</p>
+          <p class="back__cta-or">o escanee el código para elegir un horario &rarr;</p>
+        </div>
+        <div class="back__qr">
+          <span class="back__qr-text">QR</span>
+        </div>
+      </div>
+      <p class="back__disclosure">NJ Solar Consultant conecta a propietarios con opciones de energía solar y recibe compensación de instaladores asociados. Consulta gratuita, sin ninguna obligación.</p>
+    </div>
+  </div>
+  <div class="back__address-area">
+    <div class="back__return">
+      NJ Solar Consultant<br>
+      <span class="back__return-tbd">[PO Box TBD]</span>
+    </div>
+    <div class="back__stamp">Place<br>Stamp<br>Here</div>
+    <div class="back__addr-lines">
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VARIANT B-ES — "Sus vecinos dijeron que sí" (Spanish Social Proof)
+     ============================================================ -->
+
+<p class="variant-label">Variant B (Español) — Prueba Social</p>
+<p class="variant-desc">Versión en español de la variante de prueba social. Más propietarios en NJ están instalando solar.</p>
+
+<p class="side-label">Frente</p>
+<div class="card front">
+  <div class="front__photo-bg"></div>
+  <div class="front__overlay"></div>
+
+  <div class="front__photo-placeholder">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" width="120" height="120"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    FOTO DE JOHAN AQUÍ
+    <span>Full bleed — frente a una casa con paneles solares</span>
+  </div>
+
+  <div class="front__content">
+    <div class="front__handwriting">
+      <span class="front__line front__line--1">Sus vecinos</span>
+      <span class="front__line front__line--2">dijeron que sí.</span>
+      <span class="front__line front__line--3" style="font-size: 44px; margin-top: 8px;">Solo le cuento.</span>
+    </div>
+    <div class="front__signature">— Johan</div>
+  </div>
+
+  <svg class="front__arrow" width="120" height="100" viewBox="0 0 120 100" fill="none">
+    <path d="M10 80 C30 75, 50 40, 90 25" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M80 15 L92 24 L78 32" stroke="#FF5E1A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="0" y="96" font-family="Permanent Marker" font-size="16" fill="#FF5E1A" transform="rotate(-3, 0, 96)">ese soy yo</text>
+  </svg>
+</div>
+
+<p class="side-label">Reverso (lado del envío)</p>
+<div class="card back">
+  <div class="back__message" style="position: relative;">
+    <div class="back__photo">Foto</div>
+    <div style="margin-left: 96px;">
+      <p class="back__greeting">Hola vecino,</p>
+    </div>
+    <div>
+      <p class="back__body">Hace un tiempo hablamos sobre energía solar, y mucho ha cambiado en su calle desde entonces. El año pasado, más propietarios en Nueva Jersey instalaron paneles solares que en ningún año anterior.</p>
+      <p class="back__body">Le muestro cuánto están ahorrando sus vecinos. Toma 15 minutos. Sin compromiso, solo los números.</p>
+      <p class="back__signature">— Johan</p>
+    </div>
+    <div>
+      <div class="back__cta-box">
+        <div class="back__cta-main">
+          <p class="back__cta-label">Su próximo paso</p>
+          <p class="back__cta-action">Envíe "SOLAR"</p>
+          <p class="back__cta-number">(201) 275-3380</p>
+          <p class="back__cta-or">o escanee el código para elegir un horario &rarr;</p>
+        </div>
+        <div class="back__qr">
+          <span class="back__qr-text">QR</span>
+        </div>
+      </div>
+      <p class="back__disclosure">NJ Solar Consultant conecta a propietarios con opciones de energía solar y recibe compensación de instaladores asociados. Consulta gratuita, sin ninguna obligación. Fuente: SEIA 2024.</p>
+    </div>
+  </div>
+  <div class="back__address-area">
+    <div class="back__return">
+      NJ Solar Consultant<br>
+      <span class="back__return-tbd">[PO Box TBD]</span>
+    </div>
+    <div class="back__stamp">Place<br>Stamp<br>Here</div>
+    <div class="back__addr-lines">
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+      <div class="back__addr-line"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

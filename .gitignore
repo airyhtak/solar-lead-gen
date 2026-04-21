@@ -1,0 +1,20 @@
+# Lead data — contains customer PII, belongs in a CRM or cloud backup, not git
+*.csv
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Secrets — NEVER commit
+.env
+.env.*
+*.key
+credentials.json
+
+# Backups / temp
+*.bak
+*.tmp
+*.zip
