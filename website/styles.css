@@ -1548,3 +1548,60 @@ select.input option[value=""] {
 .referral-prompt .btn:hover {
   transform: translateY(-1px);
 }
+
+/* === Polish pass #2 (2026-04-21) === */
+
+/* Hero wave no longer clips trust pills on mobile */
+.hero { padding: 140px 0 110px; }
+@media (min-width: 640px) { .hero { padding: 160px 0 130px; } }
+.trust-stats { margin-top: 36px; }
+
+/* Longer Spanish hero headline — shrink on mobile */
+@media (max-width: 639px) {
+  .hero__title { font-size: 2.1rem; letter-spacing: -0.02em; }
+  html[lang="es"] .hero__title { font-size: 1.95rem; }
+}
+
+/* Header CTA: outline pre-scroll so it doesn't compete with hero CTA */
+.header:not(.header--scrolled) .btn--cta {
+  background: transparent;
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.65);
+}
+.header:not(.header--scrolled) .btn--cta:hover {
+  background: rgba(255,255,255,.12);
+  box-shadow: inset 0 0 0 1.5px #fff;
+}
+
+/* Trust-badges widow wrap fix */
+.trust-badges { gap: 14px 20px; row-gap: 10px; }
+.trust-badge { flex: 0 1 auto; }
+@media (max-width: 520px) {
+  .trust-badges { flex-direction: column; align-items: center; gap: 8px; }
+}
+
+/* Referral prompt: soft green, not dashed orange */
+.referral-prompt {
+  margin-top: 32px;
+  padding: 22px 20px;
+  background: rgba(56, 161, 105, .06);
+  border: 1px solid rgba(56, 161, 105, .25);
+  border-radius: 12px;
+  text-align: center;
+}
+.referral-prompt__title { font-weight: 600; margin-bottom: 8px; color: var(--gray-800); }
+.referral-prompt__desc { font-size: .95rem; color: var(--gray-700); margin-bottom: 12px; }
+
+/* Meet-consultant vertical rhythm */
+.meet-consultant { padding: 72px 0 64px; }
+
+/* Problem section: tighten centered paragraphs + give CTA breathing room */
+.problem__lockline { margin-top: 28px; margin-bottom: 4px; }
+.problem__bill-translate { margin-top: 6px !important; color: var(--gray-600) !important; font-size: 0.92rem !important; }
+.problem__cta-wrap { margin-top: 40px; }
+
+/* Form section: constrain subhead width for tighter hierarchy */
+.lead-form__sub { max-width: 480px; margin-left: auto; margin-right: auto; font-size: 1rem; margin-bottom: 28px; }
+
+/* Mobile: don't let sticky CTA bar overlap form anchor */
+@media (max-width: 639px) { html { scroll-padding-bottom: 84px; } }

@@ -78,7 +78,7 @@
         <h3 class="problem__explainer-title">Y no hay señales de que se detenga.</h3>
         <p class="problem__explainer-text">Las tarifas de PSE&amp;G han subido 46% en la última década, y las cuentas solo empeoran. El estado está invirtiendo miles de millones en modernizar la red eléctrica (medidores inteligentes, infraestructura envejecida, el programa Energy Strong) y cada dólar termina en su factura de luz. Los costos mayoristas de energía siguen subiendo mientras aumenta la demanda de los centros de datos, los carros eléctricos y las bombas de calor. En 2024, los precios de la subasta mayorista de capacidad en NJ aumentaron significativamente, añadiendo aún más presión a las facturas futuras. La gobernadora declaró estado de emergencia por los costos de servicios públicos en su primer día en el cargo. Esto no es un pico temporal. Es una tendencia estructural sin fin a la vista.</p>
       </div>
-      <p class="problem__lockline fade-in-up">La energía solar es la única manera de escapar. Obtiene una tarifa fija protegida. El número que paga hoy es el número que paga en el año 15. Su compañía eléctrica no puede decir lo mismo.</p>
+      <p class="problem__lockline fade-in-up">Solar es la única salida. Obtiene una tarifa fija protegida. El número que paga hoy es el número que paga en el año 15. Su compañía eléctrica no puede decir lo mismo.</p>
       <p class="problem__bill-translate fade-in-up" style="text-align:center; color:var(--gray-700); font-size:1rem; max-width:640px; margin:16px auto 0;">En palabras sencillas: una factura típica de PSE&amp;G de unos $130/mes en 2015 está cerca de $190/mes hoy — y sigue subiendo.</p>
       <div class="problem__cta-wrap fade-in-up">
         <a href="#lead-form" class="btn btn--cta">Averigüe Si Califica</a>
@@ -183,7 +183,7 @@
         </div>
         <div class="meet-consultant__info">
           <h2 class="meet-consultant__name">Conozca a Su Consultor</h2>
-          <p class="meet-consultant__bio">Soy Johan. Vivo en Nueva Jersey, hablo español e inglés, y trabajo como consultor independiente — es decir, no estoy empujando el producto de un solo instalador. Saco cotizaciones de instaladores con licencia en NJ, le explico la letra pequeña que la mayoría de vendedores salta (qué pasa en el año 20, qué pasa si vende, qué pasa si refinancia), y si la energía solar no le conviene a su casa, se lo digo en la llamada. Sin costo, sin obligación, sin spam después.</p>
+          <p class="meet-consultant__bio">Soy Johan — consultor bilingüe de NJ, no trabajo para un solo instalador. Eso significa que saco cotizaciones de varios instaladores con licencia en NJ y le explico la letra pequeña que la mayoría de vendedores salta: qué pasa en el año 20, qué pasa si vende, qué pasa si refinancia. Si la energía solar no le conviene a su casa, se lo digo en la llamada y ahí terminamos. Sin costo, sin obligación, sin spam después.</p>
           <p class="meet-consultant__disclosure" style="font-size:.85rem; color:var(--gray-600); margin-top:12px;">Johan recibe una comisión de referencia del instalador con licencia únicamente si usted instala solar — usted no le paga nada a él directamente.</p>
         </div>
       </div>
@@ -258,7 +258,8 @@
         <div class="thank-you" id="thankYou" style="display:none">
           <svg viewBox="0 0 24 24" fill="none" stroke="#38a169" stroke-width="2" width="56" height="56"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
           <h3>¡Gracias, <span id="thankYouName"></span>!</h3>
-          <p class="thank-you__subtitle">Está a un paso de su consulta gratuita. Elija un horario que le funcione:</p>
+          <p class="thank-you__promise" style="font-size:1.1rem; font-weight:600; color:var(--gray-800); margin:8px 0 4px;">Johan lo llamará dentro de 24 horas.</p>
+          <p class="thank-you__subtitle">¿Prefiere un horario específico? Escoja abajo — si no, relájese, él lo contacta.</p>
 
           <div class="booking-options">
             <a href="YOUR_CALENDLY_PHONE_LINK_ES" target="_blank" rel="noopener" class="booking-card booking-card--primary">
@@ -284,10 +285,10 @@
             <p class="thank-you__tip">Tenga a mano una factura reciente de electricidad — hace la conversación mucho más útil.</p>
           </div>
 
-          <div class="referral-prompt" style="margin-top:32px; padding:20px; background:var(--gray-50); border:2px dashed var(--accent); border-radius:12px; text-align:center;">
-            <p style="font-weight:600; margin-bottom:8px;">¿Conoce a un vecino agobiado por su factura de luz?</p>
-            <p style="font-size:.95rem; color:var(--gray-700); margin-bottom:12px;">Envíele este enlace. Si instala solar, Johan le manda a usted una tarjeta de regalo de $100 como agradecimiento.</p>
-            <button class="btn btn--outline btn--sm" onclick="navigator.share ? navigator.share({title:'NJ Solar Consultant',url:window.location.href}).catch(()=>{}) : (navigator.clipboard.writeText(window.location.href).then(()=>this.textContent='¡Copiado!'))">Compartir esta página</button>
+          <div class="referral-prompt">
+            <p class="referral-prompt__title">¿Conoce a un vecino agobiado por su factura de luz?</p>
+            <p class="referral-prompt__desc">Envíele este enlace. Si instala solar, Johan le manda a usted una tarjeta de regalo de $100 como agradecimiento.</p>
+            <button class="btn btn--outline btn--sm" id="shareBtn" data-label-share="Compartir esta página" data-label-copy="Copiar enlace" data-label-copied="¡Copiado!">Compartir esta página</button>
           </div>
         </div>
       </div>
@@ -311,7 +312,7 @@
           <summary class="faq__question">¿Cuánto tiempo toma la instalación?</summary>
           <div class="faq__answer">La consulta toma unos 30 minutos. Si decide proceder, los permisos, la instalación y la conexión con la compañía eléctrica normalmente toman entre 6 y 10 semanas en total. El trabajo en el techo se hace en 1 o 2 días.</div>
         </details>
-        <details class="faq__item fade-in-up delay-3">
+        <details class="faq__item fade-in-up delay-3" id="faq-trampa">
           <summary class="faq__question">¿Cuál es la trampa?</summary>
           <div class="faq__answer">Pregunta justa. Aquí está el panorama completo: Johan recibe una comisión de referencia del instalador con licencia <em>solo si</em> usted decide instalar solar — entonces su incentivo es mandarlo a instaladores que de verdad le convengan, no presionarlo. Usted no le paga nada a Johan, nunca. El instalador gana dinero vendiéndole electricidad a una tarifa más baja que su compañía eléctrica bajo un acuerdo de 20 a 25 años. Si su techo, su crédito o su consumo no cuadran, Johan le dirá que se quede con su compañía eléctrica. Esa es la trampa: solo funciona cuando de verdad le ahorra dinero.</div>
         </details>
@@ -322,8 +323,8 @@
   <!-- ========== FINAL CTA ========== -->
   <section class="final-cta" id="final-cta">
     <div class="container">
-      <h2 class="final-cta__title">¿Aún Tiene Preguntas?</h2>
-      <p class="final-cta__sub">Sin presión. Sin obligación. Solo una conversación de 30 minutos sobre SU factura de luz y si la energía solar tiene sentido para su casa.</p>
+      <h2 class="final-cta__title">En el peor caso, se entera de que su techo no sirve. En el mejor caso, asegura su tarifa por 20 años.</h2>
+      <p class="final-cta__sub">30 minutos con Johan. Sin presión de vendedor, sin spam después. Traiga una factura reciente de PSE&amp;G o JCP&amp;L.</p>
       <div class="final-cta__buttons">
         <a href="#lead-form" class="btn btn--cta btn--lg">Reservar Mi Consulta Gratuita</a>
         <a href="sms:+12012753380" class="btn btn--outline btn--lg">Envíenos un Mensaje</a>

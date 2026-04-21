@@ -299,22 +299,56 @@
   }
 
   // ---------- Mobile CTA Bar ----------
+  // Show after hero scrolls past, HIDE when the lead form section is in view
+  // (otherwise the bar's "Text Us"/"Free Consultation" compete with the form itself).
   function initMobileCtaBar() {
     var bar = $('#mobileCta');
     var hero = $('#hero');
+    var leadForm = $('#lead-form');
     if (!bar || !hero) return;
+
+    bar.style.transform = 'translateY(100%)';
+    bar.style.transition = 'transform .3s ease';
+
+    var leadFormVisible = false;
+    if ('IntersectionObserver' in window && leadForm) {
+      var formObserver = new IntersectionObserver(function (entries) {
+        leadFormVisible = entries[0].isIntersecting;
+      }, { threshold: 0.1 });
+      formObserver.observe(leadForm);
+    }
 
     window.addEventListener('scroll', function () {
       var heroBottom = hero.getBoundingClientRect().bottom;
-      if (heroBottom < 0) {
+      if (heroBottom < 0 && !leadFormVisible) {
         bar.style.transform = 'translateY(0)';
       } else {
         bar.style.transform = 'translateY(100%)';
       }
     }, { passive: true });
+  }
 
-    bar.style.transform = 'translateY(100%)';
-    bar.style.transition = 'transform .3s ease';
+  // ---------- Share Button (thank-you screen) ----------
+  // Context-aware label: native share on mobile, clipboard copy on desktop.
+  function initShareButton() {
+    var btn = $('#shareBtn');
+    if (!btn) return;
+    var hasNativeShare = typeof navigator.share === 'function';
+    btn.textContent = hasNativeShare
+      ? btn.getAttribute('data-label-share')
+      : btn.getAttribute('data-label-copy');
+
+    btn.addEventListener('click', function () {
+      var copiedText = btn.getAttribute('data-label-copied');
+      if (hasNativeShare) {
+        navigator.share({ title: document.title, url: window.location.href }).catch(function () {});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(window.location.href).then(function () {
+          btn.textContent = copiedText;
+          setTimeout(function () { btn.textContent = btn.getAttribute('data-label-copy'); }, 2000);
+        });
+      }
+    });
   }
 
   // ---------- Initialize Everything ----------
@@ -326,6 +360,7 @@
     initLeadForm();
     initScrollReveal();
     initMobileCtaBar();
+    initShareButton();
   });
 
 })();

@@ -211,7 +211,7 @@
         </div>
         <div class="meet-consultant__info">
           <h2 class="meet-consultant__name">Meet Your Consultant</h2>
-          <p class="meet-consultant__bio">I'm Johan. I'm based in New Jersey, I'm bilingual (English and Spanish), and I work as an independent consultant — which means I'm not pushing one installer's product. I pull quotes from licensed NJ installers, walk you through the fine print most reps skip (what happens in year 20, what happens if you sell, what happens if you refinance), and if solar isn't the right move for your home, I'll say so on the call. No cost, no obligation, no follow-up spam.</p>
+          <p class="meet-consultant__bio">I'm Johan — a bilingual NJ consultant, not an installer's rep. That means I pull quotes from multiple licensed NJ installers and walk you through the fine print most salespeople skip: what happens in year 20, what happens if you sell, what happens if you refinance. If solar doesn't fit your home, I'll tell you on the call and we're done. No cost, no obligation, no follow-up spam.</p>
           <p class="meet-consultant__disclosure" style="font-size:.85rem; color:var(--gray-600); margin-top:12px;">Johan is paid a referral fee by the licensed installer only if you go solar — he receives nothing from you directly.</p>
         </div>
       </div>
@@ -286,7 +286,8 @@
         <div class="thank-you" id="thankYou" style="display:none">
           <svg viewBox="0 0 24 24" fill="none" stroke="#38a169" stroke-width="2" width="56" height="56"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
           <h3>Thanks, <span id="thankYouName"></span>!</h3>
-          <p class="thank-you__subtitle">You're one step away from your free consultation. Pick a time that works:</p>
+          <p class="thank-you__promise" style="font-size:1.1rem; font-weight:600; color:var(--gray-800); margin:8px 0 4px;">Johan will call you within 24 hours.</p>
+          <p class="thank-you__subtitle">Want a specific time? Pick a slot below — otherwise sit tight, he'll reach out.</p>
 
           <div class="booking-options">
             <a href="YOUR_CALENDLY_PHONE_LINK" target="_blank" rel="noopener" class="booking-card booking-card--primary">
@@ -312,10 +313,10 @@
             <p class="thank-you__tip">Have a recent electric bill handy — it makes the conversation much more useful.</p>
           </div>
 
-          <div class="referral-prompt" style="margin-top:32px; padding:20px; background:var(--gray-50); border:2px dashed var(--accent); border-radius:12px; text-align:center;">
-            <p style="font-weight:600; margin-bottom:8px;">Know a neighbor getting crushed by their electric bill?</p>
-            <p style="font-size:.95rem; color:var(--gray-700); margin-bottom:12px;">Send them this link. If they go solar, Johan sends you a $100 gift card as a thank you.</p>
-            <button class="btn btn--outline btn--sm" onclick="navigator.share ? navigator.share({title:'NJ Solar Consultant',url:window.location.href}).catch(()=>{}) : (navigator.clipboard.writeText(window.location.href).then(()=>this.textContent='Copied!'))">Share this page</button>
+          <div class="referral-prompt">
+            <p class="referral-prompt__title">Know a neighbor getting crushed by their electric bill?</p>
+            <p class="referral-prompt__desc">Send them this link. If they go solar, Johan sends you a $100 gift card as a thank you.</p>
+            <button class="btn btn--outline btn--sm" id="shareBtn" data-label-share="Share this page" data-label-copy="Copy link to share" data-label-copied="Copied!">Share this page</button>
           </div>
         </div>
       </div>
@@ -329,7 +330,7 @@
       <div class="faq__list">
         <details class="faq__item fade-in-up delay-1">
           <summary class="faq__question">What happens if I sell my house?</summary>
-          <div class="faq__answer">Solar panels add an average of $20,000 to your home's value in NJ, and the state exempts that increase from property tax. Homes with solar sell 17% faster. The panels and warranty transfer to the new owner.</div>
+          <div class="faq__answer">A 2019 Zillow analysis found U.S. homes with solar sold for about 4% more on average. NJ exempts the solar-related value increase from property tax. Panels and warranty transfer to the new owner. Local impact varies — Johan will walk you through specifics for your zip code on the call.</div>
         </details>
         <details class="faq__item fade-in-up delay-2">
           <summary class="faq__question">Is there really no upfront cost?</summary>
@@ -350,8 +351,8 @@
   <!-- ========== FINAL CTA ========== -->
   <section class="final-cta" id="final-cta">
     <div class="container">
-      <h2 class="final-cta__title">Still Have Questions?</h2>
-      <p class="final-cta__sub">No pressure. No obligation. Just a 30-minute conversation about YOUR electric bill and whether solar makes sense for your home.</p>
+      <h2 class="final-cta__title">Worst case, you learn your roof doesn't work. Best case, you lock in your rate for 20 years.</h2>
+      <p class="final-cta__sub">30 minutes with Johan. No installer pitch, no follow-up spam. Bring a recent PSE&amp;G or JCP&amp;L bill.</p>
       <div class="final-cta__buttons">
         <a href="#lead-form" class="btn btn--cta btn--lg">Book My Free Consultation</a>
         <a href="sms:+12012753380" class="btn btn--outline btn--lg">Text Us</a>
