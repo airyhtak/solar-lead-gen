@@ -21,7 +21,7 @@ function sanitize(val) {
 }
 
 /**
- * Simple rate limiter — max 3 submissions per email per 10 minutes.
+ * Per-email rate limiter — max 3 submissions per email per 10 minutes.
  */
 function isRateLimited(email) {
   if (!email) return false;
@@ -30,6 +30,19 @@ function isRateLimited(email) {
   var count = parseInt(cache.get(key) || '0', 10);
   if (count >= 3) return true;
   cache.put(key, String(count + 1), 600);
+  return false;
+}
+
+/**
+ * Global rate limiter — caps total submissions across the whole script to
+ * protect Johan's Gmail daily quota (100/day) and prevent a flood attack
+ * using unique emails from bypassing the per-email limiter.
+ */
+function isGloballyRateLimited() {
+  var cache = CacheService.getScriptCache();
+  var count = parseInt(cache.get('global_rate_10min') || '0', 10);
+  if (count >= 30) return true;  // 30 leads per 10 minutes ceiling (~3x peak)
+  cache.put('global_rate_10min', String(count + 1), 600);
   return false;
 }
 
@@ -56,8 +69,8 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    // Rate limit check
-    if (isRateLimited(data.email)) {
+    // Rate limit checks (global first — stops flood attack with unique emails)
+    if (isGloballyRateLimited() || isRateLimited(data.email)) {
       return ContentService
         .createTextOutput(JSON.stringify({ status: 'rate_limited' }))
         .setMimeType(ContentService.MimeType.JSON);
@@ -81,13 +94,18 @@ function doPost(e) {
       sanitize(data.name) || '',              // C: Name
       sanitize(data.phone) || '',             // D: Phone
       sanitize(data.email) || '',             // E: Email
-      '',                                     // F: Address (now collected during consultation)
+      '',                                     // F: Address (collected during consultation)
       sanitize(data.monthlyBill) || '',       // G: Monthly Bill
       '',                                     // H: Motivation (removed from form)
       'New',                                  // I: Status
       sanitize(data.tcpaConsent) || '',       // J: TCPA Consent
-      sanitize(data.consentText) || '',       // K: Consent Language
-      language,                               // L: Language (en/es) — for funnel routing
+      sanitize(data.consentText) || '',       // K: Consent Language (legal record)
+      language,                               // L: Language (en/es)
+      sanitize(data.utm_source) || '',        // M: UTM Source
+      sanitize(data.utm_medium) || '',        // N: UTM Medium
+      sanitize(data.utm_campaign) || '',      // O: UTM Campaign
+      sanitize(data.fbclid || data.gclid) || '', // P: Ad Click ID
+      sanitize(data.referrer) || '',          // Q: Referrer URL
     ];
 
     // Append the row

@@ -1483,3 +1483,68 @@ select.input option[value=""] {
     font-size: 2.75rem;
   }
 }
+
+/* === Post-audit additions (2026-04-21) === */
+
+/* Visible form labels replacing sr-only pattern — WCAG 3.3.2 fix */
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+/* Input border contrast fix — WCAG 1.4.11 */
+.input {
+  border-color: #94a3b8 !important;
+  background: #ffffff;
+}
+.input:focus {
+  border-color: var(--accent, #38a169) !important;
+  outline: 2px solid rgba(56, 161, 105, 0.2);
+  outline-offset: 0;
+}
+.input::placeholder {
+  color: #64748b !important;
+}
+
+/* Hero micro-disclosure under CTA — 20-25 yr PPA disclosure */
+.hero__micro {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 14px auto 0;
+  max-width: 580px;
+  line-height: 1.5;
+}
+
+/* Consent area — bigger tap target, readable text, deliberate visual block */
+.consent-group {
+  background: var(--gray-50, #f8fafc);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.consent-text {
+  font-size: 0.85rem !important;
+  color: var(--gray-700, #475569);
+  line-height: 1.5;
+}
+.consent-label {
+  min-height: 44px;
+  padding: 8px 4px;
+  align-items: flex-start;
+  display: flex;
+  gap: 10px;
+}
+.consent-checkbox {
+  min-width: 20px;
+  min-height: 20px;
+  margin-top: 4px;
+}
+
+/* Referral prompt — hover */
+.referral-prompt .btn:hover {
+  transform: translateY(-1px);
+}

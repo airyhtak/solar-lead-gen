@@ -205,6 +205,8 @@
       var langField = $('#formLanguage');
       var language = langField ? langField.value : 'en';
 
+      // Capture UTM params + referrer for attribution
+      var urlParams = new URLSearchParams(window.location.search);
       var payload = {
         type: 'lead',
         name: name,
@@ -213,42 +215,62 @@
         monthlyBill: monthlyBill,
         language: language,
         tcpaConsent: 'Yes',
-        consentText: 'I agree to receive calls and text messages (including by autodialer) from NJ Solar Consultant at the phone number provided. Consent is not a condition of purchase. You may receive up to 10 messages over 14 days.',
+        // Capture the exact consent text the user saw on the page (EN or ES) for the legal record.
+        consentText: (function () {
+          var consentEl = document.querySelector('.consent-text');
+          return consentEl ? consentEl.innerText.trim() : '';
+        })(),
+        utm_source: urlParams.get('utm_source') || '',
+        utm_medium: urlParams.get('utm_medium') || '',
+        utm_campaign: urlParams.get('utm_campaign') || '',
+        fbclid: urlParams.get('fbclid') || '',
+        gclid: urlParams.get('gclid') || '',
+        referrer: document.referrer || '',
         website: honeypot ? honeypot.value : '',
         timestamp: new Date().toISOString()
       };
 
-      // Send to Google Sheets webhook
-      sendToWebhook(payload);
-
-      // Mark as submitted to prevent duplicates
-      sessionStorage.setItem('solar_submitted', 'true');
-
-      // Show thank you message
-      form.style.display = 'none';
-      var ty = $('#thankYou');
-      if (ty) {
-        ty.style.display = 'block';
-        var firstName = name.split(' ')[0];
-        var nameEl = $('#thankYouName');
-        if (nameEl) nameEl.textContent = firstName;
-      }
+      // Send to webhook. Only show thank-you and lock the form if the submission
+      // actually succeeds — otherwise the user can retry.
+      sendToWebhook(payload, function (ok) {
+        if (!ok) {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Show Me What I\'d Save';
+          }
+          alert('Something went wrong submitting your info. Please try again, or text Johan at (201) 275-3380.');
+          return;
+        }
+        sessionStorage.setItem('solar_submitted', 'true');
+        form.style.display = 'none';
+        var ty = $('#thankYou');
+        if (ty) {
+          ty.style.display = 'block';
+          var firstName = name.split(' ')[0];
+          var nameEl = $('#thankYouName');
+          if (nameEl) nameEl.textContent = firstName;
+        }
+      });
     });
   }
 
-  function sendToWebhook(data) {
+  function sendToWebhook(data, done) {
+    var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timeout = controller ? setTimeout(function () { controller.abort(); }, 10000) : null;
     fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      signal: controller ? controller.signal : undefined
     })
     .then(function (response) {
-      if (!response.ok) {
-        console.error('Submission may have failed:', response.status);
-      }
+      if (timeout) clearTimeout(timeout);
+      if (!response.ok) { done(false); return; }
+      done(true);
     })
     .catch(function () {
-      console.error('Network error submitting lead');
+      if (timeout) clearTimeout(timeout);
+      done(false);
     });
   }
 
